@@ -11,24 +11,35 @@
 	};
 
 	EE.prototype.on = function (eventName, listener, context) {
+		
+		if(!this.listeners[eventName]) {
+			this.listeners[eventName] = [];
+		}
+
+		var currentListener = {
+			func: listener,
+			ctx: context || window
+		};
+
+		this.listeners[eventName].push(currentListener);
+		var scope = this;
+		return function() {
+			var idx = scope.listeners[eventName].indexOf(currentListener);
+			if(idx !== -1) {
+				scope.listeners[eventName].splice(idx,1);
+			}
+		}
 
 	};
 
-	EE.prototype.emit = function (eventName /*, other args...*/) {
+	EE.prototype.emit = function (eventName) {
+		var args = Array.prototype.slice.call(arguments);
+		args.shift();
+		this.listeners[eventName].forEach(function (data) {
+			data.func.apply(data.ctx,args);
+		});
 
 	};
-
-//	var ee = new EE();
-//
-//	var removeListener = ee.on('test', function (arg1, arg2) {
-//		console.log(arg1, arg2, this.key);
-//	}, { key: 'value' });
-//
-//	ee.emit('test', 1, 2); // 1, 2 value
-//
-//	removeListener(); //removes my listener from the event emitter;
-//
-//	ee.emit('test'); //nothing will execute
 
 	global.UAM.EventEmitter = EE;
 
