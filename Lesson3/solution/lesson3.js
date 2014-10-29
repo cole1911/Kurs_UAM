@@ -1,5 +1,5 @@
 window.onload = function() {
-	var buttonAdd = document.querySelector("button.add");
+	var buttonAdd = document.querySelector("button.add_btn");
 	
 	var list = document.querySelector("ul");
 	var input = document.querySelector("input");
@@ -27,7 +27,8 @@ window.onload = function() {
 
 	var removeClick = function(event) {
 		var elToRemove = getRemovedLiElement(event.target);
-		list.removeChild(elToRemove);
+		elToRemove.style.opacity = 0;
+		setTimeout(function() {list.removeChild(elToRemove);},500);
 		console.log("");
 	}
 
