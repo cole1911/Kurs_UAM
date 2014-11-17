@@ -1,6 +1,6 @@
 window.addEventListener('DOMContentLoaded', function () {
 	//After the page structure is loaded
-
+	var ee = new UAM.EventEmitter();
 	var store = new UAM.Store();
 
 	var inputView = new UAM.InputView(document.querySelector('#inputview'));
