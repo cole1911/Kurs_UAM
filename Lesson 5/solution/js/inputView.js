@@ -1,19 +1,23 @@
 UAM.InputView = function (inputView) {
 	UAM.EventEmitter.call(this);
-	this.inputView = inputView;
-	this.listeners = {};
-	var buttonAdd = document.querySelector('#btn');
-	var input = document.querySelector('#inputValue');
-	buttonAdd.addEventListener("click", function() {
-		UAM.InputView.prototype.btnAddClicked();
+	
+	this.buttonAdd = document.querySelector('#btn');
+	this.inputElement = document.querySelector('#inputValue');
+
 		
-	});
+	this.add = function() {
+		var content = this.inputElement.value;
+			if(content) {
+				var liElement = document.createElement("li");
+				liElement.textContent = content;
+				this.inputElement.value = "";
+				this.emit("addElement",liElement);
+			}
+	};
+
+	this.buttonAdd.addEventListener("click",this.add.bind(this));	
+
 };
 
 UAM.utils.inherits(UAM.EventEmitter, UAM.InputView);
-
-
-UAM.InputView.prototype.btnAddClicked = function() {
-	UAM.InputView.prototype.emit("addElement");
-};
 

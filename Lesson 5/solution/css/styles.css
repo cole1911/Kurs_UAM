@@ -52,3 +52,9 @@ body {
 	}
 	
 	#listview li button { border:none; float:right;height:100%;width:100px;cursor:pointer}
+
+	#footerview {display:inline-block;text-align:center;background-color: #000;width:600px;padding:10px 0px;color:#fff;}
+
+	.active_element {
+		background-color:rgba(95, 232, 118, 0.7) !important;
+	}

@@ -1,9 +1,10 @@
-InputCtrl = function () {
-	UAM.EventEmitter.call(this);
-		var f = function() {console.log('ok')};
-	UAM.EventEmitter.prototype.on("addElement",f,ic);
+InputCtrl = function (inputView, listView, footerView, store) {
+	
+	var add = function(element) {
+		listView.add(element);
+
+	};
+	inputView.on("addElement",add);
+
+
 };
-
-var ic = new InputCtrl();
-
-UAM.utils.inherits(UAM.EventEmitter, InputCtrl);
