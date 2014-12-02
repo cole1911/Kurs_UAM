@@ -3,12 +3,6 @@ UAM.Store = function () {
 	this.data  = [];
 	this.selectedItems = [];
 
-	this.add = function (data,element) {
-		this.data.push(element);
-		this.emit("elementAdded",this.data);
-	};
-	this.add.bind(this); //przypisanie kontekstu do funkcji aby mógł zostać wykonany emit
-
 	//true gdy element zostal dodany, false gdy usuniety
 	this.checkItem = function(item) {
 		if(this.selectedItems.indexOf(item) < 0) {
@@ -24,5 +18,12 @@ UAM.Store = function () {
 
 UAM.utils.inherits(UAM.EventEmitter, UAM.Store);
 
-
-UAM.Store.prototype.update = function (id, data) {};
+UAM.Store.prototype.add = function (element) {
+	this.data.push(element);
+	this.emit("elementAdded",element);
+};
+UAM.Store.prototype.updateFooter = function (el) {
+	var isElementActive = this.checkItem(el);
+	this.emit("elementChecked",isElementActive,el);
+	this.emit("updateFooterView");
+};

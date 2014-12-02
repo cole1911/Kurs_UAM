@@ -1,4 +1,5 @@
 window.addEventListener('DOMContentLoaded', function () {
+	//After the page structure is loaded
 
 	var store = new UAM.Store();
 
@@ -6,7 +7,7 @@ window.addEventListener('DOMContentLoaded', function () {
 	var listView = new UAM.ListView(document.querySelector('#listview'));
 	var footerView = new UAM.FooterView(document.querySelector('#footerview'));
 
-	new InputCtrl(inputView, listView, store);
-	new ListCtrl(listView, footerView, store);
+	new InputCtrl(inputView, store);
+	new ListCtrl(listView, store);
 	new FooterCtrl(footerView, store);
 });
