@@ -21,6 +21,7 @@ UAM.Http = {
 
 		httpRequest.open(method, url);
 		if(method === "POST") {
+			httpRequest.setRequestHeader("Content-Type", "application/json");
 			httpRequest.send(requestData);
 		} else {
 			httpRequest.send();

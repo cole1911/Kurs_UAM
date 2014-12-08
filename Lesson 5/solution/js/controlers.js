@@ -10,26 +10,47 @@ InputCtrl = function (inputView, store) {
 
 ListCtrl = function (listView, store) {
 
-    var callback = function (err, response) {
+    var getCallback = function (err, response) {
         if (err) {
-
+            UAM.Messages.newMessage("Something went wrong. Error: " + err);
+            setTimeout(function() {UAM.Messages.clear();},15000);
         } else {
             console.log(response);
+            var newElement = document.createElement("li");
+            newElement.textContent = response[0].key;
+            store.add(newElement);
         }
     };
 
     var getDataFromServer = function() {
-        UAM.Http.request('/api/todos', 'GET',null,callback);
+        UAM.Http.request('/api/todos', 'GET',null,getCallback);
     };
 
     getDataFromServer();
 
     var addElementToList = function(el) {
-        var objToSend = {id:1,value:"ss"};
-        var array = [];
-        array.push(objToSend);
-        UAM.Http.request('/api/todos', 'POST',array,callback);
-        listView.addElement(el);
+        var array = JSON.stringify(
+            [
+                {
+                    key: el.textContent
+                }
+            ]
+        );
+
+        var postCallback = function(err, response) {
+            if (err) {
+                UAM.Messages.newMessage("Something went wrong. Error: " + err);
+                setTimeout(function() {UAM.Messages.clear();},15000);
+            } else {
+                listView.addElement(el);
+                UAM.Messages.newMessage("Element added");
+                setTimeout(function() {UAM.Messages.clear();},1500);
+            }
+        };
+
+        UAM.Http.request('/api/todos', 'POST',array,postCallback);
+        UAM.Messages.newMessage("Adding new element");
+
     };
 
     var updateFooter = function(element) {
